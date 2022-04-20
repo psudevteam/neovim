@@ -10,8 +10,20 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter' -- neovim Treesitter
   use 'hrsh7th/vim-vsnip' -- vsnip for snippet
   use 'hrsh7th/vim-vsnip-integ' -- vsnip integration
+  use 'hrsh7th/cmp-nvim-lsp' -- nvim lsp server
+  use 'hrsh7th/cmp-buffer' -- nvim buffert catalogy
+  use 'hrsh7th/cmp-path' --- nvim detect path
+  use 'hrsh7th/cmp-cmdline' --- nvim cmdline
+  use 'hrsh7th/cmp-vsnip' --- nvim vsnip
   use 'rebelot/kanagawa.nvim' -- kanagawa colorscheme
   use 'voldikss/vim-floaterm' -- floating terminal
+  use 'APZelos/blamer.nvim' -- GitHub Lens
+  use 'rinx/nvim-minimap'
+	use {
+    'ruifm/gitlinker.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = get_config('gitlinker')
+	}
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
@@ -23,21 +35,21 @@ require('packer').startup(function()
     'MunifTanjim/prettier.nvim',
     config = get_config('prettier')
   }  -- neovim prettier
+  use{
+    'noib3/nvim-cokeline',
+    requires = 'kyazdani42/nvim-web-devicons', -- If you want devicons
+    config = function()
+      require('cokeline').setup()
+    end
+  }
   use {
   'lukas-reineke/indent-blankline.nvim',
   config = get_config('indent')
   }
   use {
-     'ms-jpq/coq_nvim',
-     branch = 'coq',
-     event = "VimEnter",
-     config = 'vim.cmd[[COQnow]]'
-  }
-  use {
     'jose-elias-alvarez/null-ls.nvim',
     config = get_config('null')
   }
-  use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
   use {
   'nvim-telescope/telescope.nvim',
   requires = { {'nvim-lua/plenary.nvim'} }

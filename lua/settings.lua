@@ -4,7 +4,13 @@ local fn = vim.fn
 
 vim.cmd "set inccommand=split"
 vim.cmd "set nowrap"
+vim.cmd "set mouse=a"
 vim.cmd "colorscheme kanagawa"
+vim.cmd "autocmd BufWritePre *.js Prettier"
+vim.cmd "autocmd BufWritePre *.ts Prettier"
+vim.cmd "autocmd BufWritePre *.vue Prettier"
+vim.cmd "autocmd BufWritePre *.css Prettier"
+vim.cmd "autocmd BufWritePre *.html Prettier"
 o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50" -- block in normal and beam cursor in insert mode
 o.updatetime = 300 -- faster completion
 o.timeoutlen = 400 -- time to wait for a mapped sequence to complete (in milliseconds)
@@ -19,6 +25,7 @@ o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 o.fileencoding = "utf-8" -- the encoding written to a file
 o.conceallevel = 0 -- so that `` is visible in markdown files
 o.number = true -- set numbered lines
+o.mouse = a
 o.relativenumber = true -- set relative numbered lines
 o.cmdheight = 1 -- space for displaying messages/commands
 o.showmode = false -- we don't need to see things like -- INSERT -- anymore
@@ -38,9 +45,8 @@ o.sidescrolloff = 5 -- The minimal number of columns to scroll horizontally
 o.hlsearch = true -- highlight all matches on previous search pattern
 o.ignorecase = true -- ignore case in search patterns
 o.foldenable = false -- disable folding; enable with zi
-o.foldmethod = "expr"
-o.foldexpr = "nvim_treesitter#foldexpr()"
--- o.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<"
+o.foldmethod = "syntax" -- foldmethod set to syntax
+o.foldexpr = "nvim_treesitter#foldexpr()" -- o.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<"
 o.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣"
 o.shortmess = o.shortmess + "c" -- prevent "pattern not found" messages
 wo.colorcolumn = "99999"
