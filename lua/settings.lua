@@ -2,21 +2,14 @@ local o = vim.opt
 local wo = vim.wo
 local fn = vim.fn
 
-vim.cmd "set inccommand=split"
-vim.cmd "set nowrap"
-vim.cmd "set mouse=a"
+--vim.cmd "let g:neosolarized_termtrans=1"
 vim.cmd "colorscheme kanagawa"
-vim.cmd "autocmd BufWritePre *.js Prettier"
-vim.cmd "autocmd BufWritePre *.ts Prettier"
-vim.cmd "autocmd BufWritePre *.vue Prettier"
-vim.cmd "autocmd BufWritePre *.css Prettier"
-vim.cmd "autocmd BufWritePre *.html Prettier"
 o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50" -- block in normal and beam cursor in insert mode
 o.updatetime = 300 -- faster completion
-o.timeoutlen = 400 -- time to wait for a mapped sequence to complete (in milliseconds)
+o.timeoutlen = 400 -- time to wait for a mapped sequence to complete ()
 o.ttimeoutlen = 0 -- Time in milliseconds to wait for a key code sequence to complete
 o.backup = false -- creates a backup file
-o.swapfile = true -- enable/disable swap file creation
+o.swapfile = false -- enable/disable swap file creation
 o.dir = fn.stdpath("data") .. "/swp" -- swap file directory
 o.undofile = true -- enable/disable undo file creation
 o.undodir = fn.stdpath("data") .. "/undodir" -- set undo directory
@@ -25,9 +18,8 @@ o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 o.fileencoding = "utf-8" -- the encoding written to a file
 o.conceallevel = 0 -- so that `` is visible in markdown files
 o.number = true -- set numbered lines
-o.mouse = a
 o.relativenumber = true -- set relative numbered lines
-o.cmdheight = 1 -- space for displaying messages/commands
+o.cmdheight = 2 -- space for displaying messages/commands
 o.showmode = false -- we don't need to see things like -- INSERT -- anymore
 o.showtabline = 2 -- always show tabs
 o.laststatus = 2 --  The value of this option influences when the last window will have a status line (2 always)
