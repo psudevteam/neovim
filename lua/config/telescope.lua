@@ -1,0 +1,1 @@
+local tele = require('telescope')

@@ -1,6 +1,6 @@
--- Setup nvim-cmp.
-local cmp = require "cmp"
-local lspkind = require("lspkind")
+local cmp = require('cmp')
+local kind = require('lspkind')
+local devicons = require('nvim-web-devicons')
 
 local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -14,111 +14,107 @@ local feedkey = function(key, mode)
                           mode, true)
 end
 
-lspkind.init({
-    symbol_map = {
-        Text = "",
-        Method = "",
-        Function = "",
-        Constructor = "",
-        Field = "ﰠ",
-        Variable = "",
-        Class = "ﴯ",
-        Interface = "",
-        Module = "",
-        Property = "ﰠ",
-        Unit = "塞",
-        Value = "",
-        Enum = "",
-        Keyword = "",
-        Snippet = "",
-        Color = "",
-        File = "",
-        Reference = "",
-        Folder = "",
-        EnumMember = "",
-        Constant = "",
-        Struct = "פּ",
-        Event = "",
-        Operator = "",
-        TypeParameter = ""
-    }
-})
+  cmp.register_source('devicons', {
+    complete = function(self, params, callback)
+      local items = {}
+      for _, icon in pairs(devicons.get_icons()) do
+        table.insert(items, {
+          label = icon.icon .. '  ' .. icon.name,
+          insertText = icon.icon,
+          filterText = icon.name,
+       })
+      end
+      callback({ items = items })
+    end,
+  })
 
-cmp.setup({
+  cmp.setup({
     formatting = {
-        format = lspkind.cmp_format {
-            with_text = false,
-            maxwidth = 50,
-            menu = {
-                buffer = "BUF",
-                nvim_lsp = "LSP",
-                path = "PATH",
-                vsnip = "SNIP",
-                calc = "CALC",
-                spell = "SPELL",
-                emoji = "EMOJI"
-            }
-        }
+      format = function(entry, vim_item)
+        vim_item.kind = kind.presets.default[vim_item.kind]
+        vim_item.menu = ({
+              nvim_lsp = "[LSP]",
+              look = "[Dict]",
+              buffer = "[Buffer]"
+            })[entry.source.name]
+      return vim_item
+    end
     },
-    experimental = {native_menu = false, ghost_text = false},
     snippet = {
-        expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        end
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+      end,
+    },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
     },
     mapping = {
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = false
-        },
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif vim.fn["vsnip#available"](1) == 1 then
-                feedkey("<Plug>(vsnip-expand-or-jump)", "")
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-            end
-        end, {"i", "s"}),
-        ["<S-Tab>"] = cmp.mapping(function()
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-                feedkey("<Plug>(vsnip-jump-prev)", "")
-            end
-        end, {"i", "s"})
+      ["<C-p>"] = cmp.mapping.select_prev_item(),
+      ["<C-n>"] = cmp.mapping.select_next_item(),
+      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.close(),
+      ["<CR>"] = cmp.mapping.confirm {
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = false
+      },
+      ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+              cmp.select_next_item()
+          elseif vim.fn["vsnip#available"](1) == 1 then
+              feedkey("<Plug>(vsnip-expand-or-jump)", "")
+          elseif has_words_before() then
+              cmp.complete()
+          else
+              fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+          end
+      end, {"i", "s"}),
+      ["<S-Tab>"] = cmp.mapping(function()
+          if cmp.visible() then
+              cmp.select_prev_item()
+          elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+              feedkey("<Plug>(vsnip-jump-prev)", "")
+          end
+      end, {"i", "s"})
     },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' },
+    }, 
+    {
+      { name = 'buffer' },
+    })
+  })
+
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' },
+    }, 
+    {
+      { name = 'buffer' },
+    })
+  })
+
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = {
-        {name = "nvim_lsp"}, {name = "buffer", keyword_length = 5},
-        {name = "vsnip"}, {name = "calc"}, {name = "emoji"}, {name = "spell"},
-        {name = "path"}
+      { name = 'buffer' }
     }
-})
+  })
 
--- Use buffer source for `/`.
-cmp.setup.cmdline("/", {sources = {{name = "buffer"}}})
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
 
--- Use cmdline & path source for ':'.
-cmp.setup.cmdline(":", {
-    sources = cmp.config.sources({{name = "path"}}, {{name = "cmdline"}})
-})
-
- -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['pyright'].setup {
-    capabilities = capabilities
-  }
-
-  require('lspconfig')['volar'].setup {
+  require('lspconfig')['tsserver'].setup {
     capabilities = capabilities
   }
 
@@ -126,18 +122,18 @@ cmp.setup.cmdline(":", {
     capabilities = capabilities
   }
 
+  require('lspconfig')['html'].setup {
+    capabilities = capabilities
+  }
+
+  require('lspconfig')['pyright'].setup {
+    capabilities = capabilities
+  }
+
   require('lspconfig')['tailwindcss'].setup {
     capabilities = capabilities
   }
 
-  require('lspconfig')['html'].setup {
-    capabilities = capabilities,
-  }
-
-  require('lspconfig')['tsserver'].setup {
-    capabilities = capabilities
-  }
-
-  require('lspconfig')['emmet-ls'].setup {
+  require('lspconfig')['emmet_ls'].setup {
     capabilities = capabilities
   }

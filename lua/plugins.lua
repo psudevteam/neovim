@@ -5,71 +5,75 @@ end
 local use = require('packer').use
 
 require('packer').startup(function()
-  use 'wbthomason/packer.nvim' -- package manager
-  use 'jiangmiao/auto-pairs' -- auto pairs 
-  use 'nvim-treesitter/nvim-treesitter' -- neovim Treesitter
-  use 'hrsh7th/vim-vsnip' -- vsnip for snippet
-  use 'hrsh7th/vim-vsnip-integ' -- vsnip integration
-  use 'hrsh7th/cmp-nvim-lsp' -- nvim lsp server
-  use 'hrsh7th/cmp-buffer' -- nvim buffert catalogy
-  use 'hrsh7th/cmp-path' --- nvim detect path
-  use 'hrsh7th/cmp-cmdline' --- nvim cmdline
-  use 'hrsh7th/cmp-vsnip' --- nvim vsnip
-  use 'rebelot/kanagawa.nvim' -- kanagawa colorscheme
-  use 'voldikss/vim-floaterm' -- floating terminal
-  use 'APZelos/blamer.nvim' -- GitHub Lens
-  use 'rinx/nvim-minimap'
-	use {
-    'ruifm/gitlinker.nvim',
-    requires = 'nvim-lua/plenary.nvim',
-    config = get_config('gitlinker')
-	}
+  use 'wbthomason/packer.nvim'
+  use 'jiangmiao/auto-pairs'
+  use 'voldikss/vim-floaterm'
+
   use {
-    'kyazdani42/nvim-tree.lua',
-    requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
-    },
-    config = function() require'nvim-tree'.setup {} end
+   'kyazdani42/nvim-tree.lua',
+    config = get_config('tree')
   }
+
   use {
-    'MunifTanjim/prettier.nvim',
-    config = get_config('prettier')
-  }  -- neovim prettier
-  use{
-    'noib3/nvim-cokeline',
-    requires = 'kyazdani42/nvim-web-devicons', -- If you want devicons
-    config = function()
-      require('cokeline').setup()
-    end
+    'nvim-treesitter/nvim-treesitter',
+    config = get_config('treesitter')
   }
-  use {
-  'lukas-reineke/indent-blankline.nvim',
-  config = get_config('indent')
-  }
-  use {
-    'jose-elias-alvarez/null-ls.nvim',
-    config = get_config('null')
-  }
-  use {
-  'nvim-telescope/telescope.nvim',
-  requires = { {'nvim-lua/plenary.nvim'} }
-  }
-  use {
-  'nvim-lualine/lualine.nvim',
-   requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-   config = get_config('lualine')
-  }
+
   use {
     'neovim/nvim-lspconfig',
-    config = get_config("lsp")
-    } -- collection of configurations for the built-in LSP client
+    config = get_config('lsp')
+  }
+
+  use {
+    'onsails/lspkind.nvim',
+    config = get_config('lspkind')
+  }
+
   use {
     'hrsh7th/nvim-cmp',
+    requires = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-git',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-vsnip',
+      'hrsh7th/vim-vsnip',
+      'kyazdani42/nvim-web-devicons',
+    },
     config = get_config('cmp')
-    }
+  }
+
   use {
-    'onsails/lspkind-nvim'
-    }
+    'nvim-telescope/telescope.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = get_config('telescope')
+  }
+
+  use {
+    'nvim-lualine/lualine.nvim',
+    config = get_config('lualine')
+  }
+
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    config = get_config('indent')
+  }
+
+  use {
+    'akinsho/bufferline.nvim', tag = "v2.*",
+    config = get_config('bufferline')
+  }
+
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+    requires = 'MunifTanjim/prettier.nvim',
+    config = get_config('prettier')
+  }
+
+  use {
+    'rebelot/kanagawa.nvim',
+    config = get_config('kanagawa')
+  }
 end)
 
 vim.cmd([[
