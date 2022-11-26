@@ -2,9 +2,10 @@ local o = vim.opt
 local wo = vim.wo
 local fn = vim.fn
 
---vim.cmd "let g:neosolarized_termtrans=1"
+vim.cmd "let g:neosolarized_termtrans=1"
 vim.cmd "colorscheme kanagawa"
 o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50" -- block in normal and beam cursor in insert mode
+o.wrap = true;
 o.updatetime = 300 -- faster completion
 o.timeoutlen = 400 -- time to wait for a mapped sequence to complete ()
 o.ttimeoutlen = 0 -- Time in milliseconds to wait for a key code sequence to complete

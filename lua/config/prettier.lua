@@ -4,8 +4,7 @@ local prettier = require("prettier")
 null_ls.setup({
   on_attach = function(client, bufnr)
     if client.resolved_capabilities.document_formatting then
-      vim.cmd("nnoremap <silent><buffer> <Leader>f :lua vim.lsp.buf.formatting()<CR>")
-      vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
+      vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.format({async = true})")
     end
 
     if client.resolved_capabilities.document_range_formatting then
@@ -31,21 +30,4 @@ prettier.setup({
     "typescriptreact",
     "yaml",
   },
-
-  arrow_parens = "always",
-  bracket_spacing = true,
-  embedded_language_formatting = "auto",
-  end_of_line = "lf",
-  html_whitespace_sensitivity = "css",
-  jsx_bracket_same_line = false,
-  jsx_single_quote = false,
-  print_width = 80,
-  prose_wrap = "preserve",
-  quote_props = "as-needed",
-  semi = true,
-  single_quote = false,
-  tab_width = 2,
-  trailing_comma = "es5",
-  use_tabs = false,
-  vue_indent_script_and_style = false,
 })

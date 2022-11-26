@@ -3,15 +3,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 nvim_lsp.tsserver.setup {
-  filetypes = { "typescript", "tsx" }
-}
-
-nvim_lsp.vuels.setup{
-  filetypes = { "vue" }
-}
-
-nvim_lsp.tailwindcss.setup {
-  filetypes = { "vue", "html" }
+  filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" }
 }
 
 nvim_lsp.pyright.setup {
@@ -23,17 +15,17 @@ nvim_lsp.html.setup {
   filetypes = { "html" }
 }
 
+nvim_lsp.astro.setup {
+  capabilities = capabilities,
+  filetypes = { "astro" }
+}
+
 nvim_lsp.emmet_ls.setup{
   filetypes = { "html", "css" }
 }
 
-nvim_lsp.volar.setup {
-  filetypes = {'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'},
-   init_options = {
-    typescript = {
-      serverPath = '/home/ms/.nvm/versions/node/v16.15.0/lib/node_modules/typescript/lib/tsserverlibrary.js'
-    }
-  }
+nvim_lsp.tailwindcss.setup{
+  filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" }
 }
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
@@ -44,6 +36,6 @@ end
 
 vim.diagnostic.config({
   virtual_text = {
-    prefix = '', -- Could be '●', '▎', 'x'
+    prefix = '',
   }
 })

@@ -114,11 +114,8 @@ end
   })
 
   local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-  require('lspconfig')['tsserver'].setup {
-    capabilities = capabilities
-  }
 
-  require('lspconfig')['vuels'].setup {
+  require('lspconfig')['tsserver'].setup {
     capabilities = capabilities
   }
 
@@ -126,7 +123,11 @@ end
     capabilities = capabilities
   }
 
-  require('lspconfig')['pyright'].setup {
+  require('lspconfig')['astro'].setup {
+    capabilities = capabilities
+  }
+
+  require('lspconfig')['emmet_ls'].setup {
     capabilities = capabilities
   }
 
@@ -134,6 +135,6 @@ end
     capabilities = capabilities
   }
 
-  require('lspconfig')['emmet_ls'].setup {
+  require('lspconfig')['pyright'].setup {
     capabilities = capabilities
   }

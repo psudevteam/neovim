@@ -9,14 +9,4 @@ tree.setup {
     enable = true,
     disable = {},
   },
-  ensure_installed = {
-    "vue",
-    "javascript",
-    "lua",
-    "typescript",
-    "html",
-    "css",
-    "scss",
-    "tsx",
-  }
 }

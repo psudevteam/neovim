@@ -10,6 +10,12 @@ require('packer').startup(function()
   use 'voldikss/vim-floaterm'
 
   use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    config = get_config('mason')
+  }
+
+  use {
    'kyazdani42/nvim-tree.lua',
     config = get_config('tree')
   }
