@@ -8,6 +8,7 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'jiangmiao/auto-pairs'
   use 'voldikss/vim-floaterm'
+  use "xiyaowong/nvim-transparent"
 
   use {
     "williamboman/mason.nvim",
