@@ -2,8 +2,9 @@ local o = vim.opt
 local wo = vim.wo
 local fn = vim.fn
 
-vim.cmd "let g:neosolarized_termtrans=1"
 vim.cmd "colorscheme kanagawa"
+vim.cmd "au InsertEnter * set nornu"
+vim.cmd "au InsertLeave * set rnu"
 o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50" -- block in normal and beam cursor in insert mode
 o.wrap = true;
 o.updatetime = 300 -- faster completion
