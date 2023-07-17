@@ -9,6 +9,10 @@ require('packer').startup(function()
   use 'jiangmiao/auto-pairs'
   use 'voldikss/vim-floaterm'
   use "xiyaowong/nvim-transparent"
+  use { 
+    "glepnir/lspsaga.nvim",
+    config = get_config("lspsaga")
+  }
 
   use {
     "williamboman/mason.nvim",
