@@ -1,6 +1,7 @@
 local tree = require('nvim-treesitter.configs')
 
 tree.setup {
+  ensure_installed = { "c", "lua", "vim", "tsx", "typescript", "html", "css", "javascript", "nix" },
   highlight = {
     enable = true,
     disable = {},
@@ -9,14 +10,4 @@ tree.setup {
     enable = true,
     disable = {},
   },
-  ensure_installed = {
-    "vue",
-    "javascript",
-    "lua",
-    "typescript",
-    "html",
-    "css",
-    "scss",
-    "tsx",
-  }
 }
